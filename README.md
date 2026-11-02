@@ -17,8 +17,8 @@ Latest Version Android Studio
 ```
 /*
 Program to print the text “Implicitintent”.
-Developed by:
-Registeration Number :
+Developed by: deepshika hemanth kumar
+Registeration Number : 212224220020
 */
 ```
 ## Main_Activity.java:
