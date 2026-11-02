@@ -1,6 +1,8 @@
 # Ex.No:2a Develop program to create a text field and a button “Navigate”. When you enter “www.gmail.com” and press navigate button it should open google page using Implicit Intents.
 
+
 ## AIM:
+
 To create a navigate button using Implicit Intent to display the gmail page using Android Studio.
 
 ## EQUIPMENTS REQUIRED:
@@ -9,27 +11,20 @@ Latest Version Android Studio
 
 ## ALGORITHM:
 
-1. Start the project: Create a new Android project in Android Studio.
-2. Design the UI: In activity_main.xml, add an EditText (to accept the URL input) and a Button (to trigger the navigation).
-3. Initialize components: In MainActivity.java, map the EditText and Button variables to their respective XML IDs using findViewById().
-4. Set click listener: Attach an OnClickListener to the button to listen for user click events.
-5. Get input: Inside the onClick method, extract the text entered in the EditText and convert it to a string.
-6. Create implicit intent: Instantiate an Intent with the action Intent.ACTION_VIEW and pass the parsed URL string using Uri.parse().
-7. Start activity: Call startActivity(intent) to trigger the OS to open the webpage in an available web browser.
-8. Execution: Run and test the application.
+
 
 ## PROGRAM:
-
-### Program to print the text “Implicitintent”.
-
-Developed by : Deepshika hemanth kumar
-
-Registeration Number : 212224220020
-
-### MainActivity.java
-
 ```
-package com.example.implicitintent;
+/*
+Program to print the text “Implicitintent”.
+Developed by:
+Registeration Number :
+*/
+```
+## Main_Activity.java:
+```
+package com.example.implicit;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
@@ -37,93 +32,88 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.implicit.R;
 
 public class MainActivity extends AppCompatActivity {
-    EditText editText;
-    Button button;
+
+    EditText urlInput;
+    Button navigateBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        editText = findViewById(R.id.editTextText);
-        button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+
+        urlInput = findViewById(R.id.urlInput);
+        navigateBtn = findViewById(R.id.navigateBtn);
+
+        navigateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                String url = editText.getText().toString().trim();
-                if (!url.startsWith("http://") && !url.startsWith("https://")) {
-                    url = "https://" + url;
+            public void onClick(View v) {
+                String url = urlInput.getText().toString().trim();
+
+                if (url.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Please enter a URL", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Add http if missing
+                    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                        url = "http://" + url;
+                    }
+
+                    // Create implicit intent
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+
+                    // Start browser
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(MainActivity.this, "No app found to handle this request", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(intent);
             }
         });
     }
 }
+
 ```
-
-### activity_main.xml
-
+## activity_main.xml:
 ```
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="236dp"
-        android:layout_height="53dp"
-        android:fontFamily="sans-serif-black"
-        android:text="Implicit Intent"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.509" />
+    android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/editTextText"
-        android:layout_width="218dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="184dp"
-        android:ems="10"
-        android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:id="@+id/urlInput"
+        android:hint="Enter website (e.g. www.gmail.com)"
+        android:inputType="textUri"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="163dp"
-        android:layout_height="58dp"
-        android:layout_marginBottom="156dp"
-        android:text="CLICK"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:id="@+id/navigateBtn"
+        android:text="Navigate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>
+
 ```
 
 ## OUTPUT
+<img width="1043" height="527" alt="o-1" src="https://github.com/user-attachments/assets/41ab9b08-c4b4-4d51-b032-c8987ccc38f9" />
+<img width="1041" height="531" alt="o-2" src="https://github.com/user-attachments/assets/78a56052-5f09-4410-9d0f-ce93d569f53a" />
+<img width="1039" height="535" alt="o-3" src="https://github.com/user-attachments/assets/45c02704-30ab-47cc-aa94-88f6b3c71179" />
 
-### Empty Page
 
-<img width="1920" height="1014" alt="Screenshot (41)" src="https://github.com/user-attachments/assets/225d713d-d2c0-45d1-945d-846c62b37ff4" />
 
-### Link Given
-
-<img width="1920" height="1017" alt="Screenshot (43)" src="https://github.com/user-attachments/assets/670d1499-370a-4809-ac79-cbb01fcf4241" />
-
-### Mail ID given
-
-<img width="1920" height="1017" alt="Screenshot (44)" src="https://github.com/user-attachments/assets/a06e04ce-54ee-411f-b774-2b09bbdfd9f9" />
 
 ## RESULT
 Thus a Simple Android Application create a navigate button using Implicit Intent to display the gmail page using Android Studio is developed and executed successfully.
+
+
